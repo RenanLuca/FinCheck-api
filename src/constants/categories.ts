@@ -1,6 +1,6 @@
-import { Category, TransactionType } from '../../generated/prisma/client';
+import { Category, TransactionType } from '../modules/categories/entities/Category';
 
-export const categories: Omit<Category, 'id' | 'userId'>[] = [
+export const categories: Category[] = [
     { name: "Salário", icon: "salary", type: TransactionType.INCOME },
     { name: "Freelance", icon: "freelance", type: TransactionType.INCOME },
     { name: "Investimentos", icon: "investments", type: TransactionType.INCOME },
