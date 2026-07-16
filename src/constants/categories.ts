@@ -1,4 +1,5 @@
-import { Category, TransactionType } from '../modules/categories/entities/Category';
+import { Category } from '../modules/categories/entities/Category';
+import { TransactionType } from '../modules/transactions/entities/Transaction';
 
 export const categories: Category[] = [
     { name: "Salário", icon: "salary", type: TransactionType.INCOME },

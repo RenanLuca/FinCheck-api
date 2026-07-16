@@ -1,7 +1,4 @@
-export enum TransactionType {
-    INCOME = "INCOME",
-    EXPENSE = "EXPENSE",
-}
+import { TransactionType } from '../../transactions/entities/Transaction';
 
 export interface Category {
     name: string;
