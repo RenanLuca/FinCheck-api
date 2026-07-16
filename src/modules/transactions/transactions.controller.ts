@@ -21,8 +21,17 @@ export class TransactionsController {
     @Query('year', ParseIntPipe) year: number,
     @Query('bankAccountId', new ParseUUIDPipe({ optional: true })) bankAccountId: string,
     @Query('type', new ParseEnumPipe(TransactionType, { optional: true })) type: TransactionType,
+    @Query('page', new ParseIntPipe({ optional: true })) page: number = 1,
+    @Query('limit', new ParseIntPipe({ optional: true })) limit: number = 20,
   ) {
-    return this.transactionsService.findAllByUserId(userId, { month, year, bankAccountId, type });
+    return this.transactionsService.findAllByUserId(userId, {
+      month,
+      year,
+      bankAccountId,
+      type,
+      page,
+      limit,
+    });
   }
 
   @Put(':id')

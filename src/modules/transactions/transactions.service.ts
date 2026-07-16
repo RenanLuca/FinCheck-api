@@ -34,23 +34,48 @@ export class TransactionsService {
     });
   }
 
-  findAllByUserId(
+  async findAllByUserId(
     userId: string,
-    filters: { month: number; year: number; bankAccountId?: string; type?: TransactionType },
+    filters: {
+      month: number;
+      year: number;
+      bankAccountId?: string;
+      type?: TransactionType;
+      page: number;
+      limit: number;
+    },
   ) {
-    const { month, year, bankAccountId, type } = filters;
+    const { month, year, bankAccountId, type, page, limit } = filters;
 
-    return this.transactionsRepository.findMany({
-      where: {
-        userId,
-        ...(bankAccountId && { bankAccountId }),
-        ...(type && { type }),
-        date: {
-          gte: new Date(Date.UTC(year, month, 1)),
-          lt: new Date(Date.UTC(year, month + 1, 1)),
-        },
+    const where = {
+      userId,
+      ...(bankAccountId && { bankAccountId }),
+      ...(type && { type }),
+      date: {
+        gte: new Date(Date.UTC(year, month, 1)),
+        lt: new Date(Date.UTC(year, month + 1, 1)),
       },
-    });
+    };
+
+    const [data, total] = await Promise.all([
+      this.transactionsRepository.findMany({
+        where,
+        orderBy: { date: 'desc' },
+        skip: (page - 1) * limit,
+        take: limit,
+      }),
+      this.transactionsRepository.count({ where }),
+    ]);
+
+    return {
+      data,
+      meta: {
+        page,
+        limit,
+        total,
+        totalPages: Math.ceil(total / limit),
+      },
+    };
   }
 
   async update(userId: string, transactionId: string, updateTransactionDto: UpdateTransactionDto) {

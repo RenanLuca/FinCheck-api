@@ -18,6 +18,10 @@ export class TransactionsRepository {
         return this.prismaService.transaction.findFirst(findFirstArgs);
     }
 
+    count(countArgs: Prisma.TransactionCountArgs) {
+        return this.prismaService.transaction.count(countArgs);
+    }
+
     update(updateArgs: Prisma.TransactionUpdateArgs) {
         return this.prismaService.transaction.update(updateArgs);
     }
