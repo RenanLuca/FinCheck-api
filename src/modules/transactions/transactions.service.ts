@@ -63,6 +63,7 @@ export class TransactionsService {
         orderBy: { date: 'desc' },
         skip: (page - 1) * limit,
         take: limit,
+        include: { category: true },
       }),
       this.transactionsRepository.count({ where }),
     ]);
