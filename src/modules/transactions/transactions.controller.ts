@@ -22,7 +22,7 @@ export class TransactionsController {
     @Query('bankAccountId', new ParseUUIDPipe({ optional: true })) bankAccountId: string,
     @Query('type', new ParseEnumPipe(TransactionType, { optional: true })) type: TransactionType,
     @Query('page', new ParseIntPipe({ optional: true })) page: number = 1,
-    @Query('limit', new ParseIntPipe({ optional: true })) limit: number = 20,
+    @Query('limit', new ParseIntPipe({ optional: true })) limit: number = 10,
   ) {
     return this.transactionsService.findAllByUserId(userId, {
       month,
